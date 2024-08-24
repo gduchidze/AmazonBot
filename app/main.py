@@ -4,7 +4,9 @@ from pinecone import Pinecone
 from app.config import PINECONE_INDEX_NAME, PINECONE_HOST, OPENAI_API_KEY, PINECONE_API_KEY
 
 # Initialize OpenAI and Pinecone clients
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
+openai_client = OpenAI(
+    api_key=OPENAI_API_KEY
+)
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(PINECONE_INDEX_NAME, host=PINECONE_HOST)
 
@@ -59,7 +61,7 @@ def generate_response(conversation_history, user_input, products):
 def product_recommendation_bot(user_input):
     conversation_history = [
         {"role": "system",
-         "content": "You are a helpful product recommendation assistant. Your goal is to help users find products they're looking for based on their queries."}
+         "content": "You are a E-commerce site Duchi's product recommendation assistant. Your goal is to help users find products they're looking for based on their queries."}
     ]
 
     results = search_products(user_input)
