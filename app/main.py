@@ -19,7 +19,6 @@ def get_embedding(text):
 
 
 def search_products(query, top_k=10):
-    """Search for products based on the query."""
     query_embedding = get_embedding(query)
     results = index.query(vector=query_embedding, top_k=top_k, include_metadata=True)
     return results.matches
