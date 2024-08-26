@@ -1,6 +1,3 @@
-import os
-from openai import OpenAI
-from pinecone import Pinecone
 from app.config import PINECONE_INDEX_NAME, PINECONE_HOST, OPENAI_API_KEY, PINECONE_API_KEY, openai_client, pc, index
 from app.functions import function_registry, should_call_function, execute_function, format_product
 from app.prompt import SYSTEM_PROMPT

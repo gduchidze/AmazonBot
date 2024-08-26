@@ -1,12 +1,8 @@
-from app.config import PINECONE_INDEX_NAME, PINECONE_HOST, OPENAI_API_KEY, PINECONE_API_KEY
+from app.config import PINECONE_INDEX_NAME, PINECONE_HOST, OPENAI_API_KEY, PINECONE_API_KEY, openai_client, pc, index
 from openai import OpenAI
 from pinecone import Pinecone
 import pandas as pd
 from tqdm import tqdm
-
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
-pc = Pinecone(api_key=PINECONE_API_KEY)
-index = pc.Index(PINECONE_INDEX_NAME, host=PINECONE_HOST)
 
 df = pd.read_csv('data/products.csv')
 
