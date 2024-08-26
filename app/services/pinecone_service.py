@@ -1,6 +1,4 @@
 from app.config import PINECONE_INDEX_NAME, PINECONE_HOST, OPENAI_API_KEY, PINECONE_API_KEY, openai_client, pc, index
-from openai import OpenAI
-from pinecone import Pinecone
 import pandas as pd
 from tqdm import tqdm
 
