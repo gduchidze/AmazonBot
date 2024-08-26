@@ -2,9 +2,16 @@ import json
 from typing import Callable, Dict, Any
 import re
 
+# ფუნქციების რეესტრი, სადაც ვინახავთ ყველა რეგისტრირებულ ფუნქციას
 function_registry: Dict[str, Dict[str, Any]] = {}
 
 def register_function(name: str, description: str, parameters: Dict[str, Any]):
+    """
+    დეკორატორი ფუნქციების რეგისტრაციისთვის.
+    name: ფუნქციის სახელი
+    description: ფუნქციის აღწერა
+    parameters: ფუნქციის პარამეტრების აღწერა
+    """
     def decorator(func: Callable):
         function_registry[name] = {
             "function": func,
@@ -26,6 +33,7 @@ def register_function(name: str, description: str, parameters: Dict[str, Any]):
         "required": ["query"]
     }
 )
+# აქ უნდა იყოს search_products ფუნქციის იმპლემენტაცია
 
 @register_function(
     name="format_product",
@@ -39,6 +47,11 @@ def register_function(name: str, description: str, parameters: Dict[str, Any]):
     }
 )
 def format_product(product: Dict[str, Any]):
+    """
+    აფორმატებს პროდუქტის ინფორმაციას სტრიქონად.
+    product: პროდუქტის ობიექტი
+    return: დაფორმატებული სტრიქონი პროდუქტის ინფორმაციით
+    """
     return f"""
 Product: {product['name']}
 Price: ${product['price']}
@@ -46,6 +59,11 @@ Category: {product['category']}
 """
 
 def process_function_call(function_call: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    ამუშავებს ფუნქციის გამოძახებას.
+    :param function_call: ფუნქციის გამოძახების ინფორმაცია
+    :return: ფუნქციის შედეგი
+    """
     function_name = function_call.get("name")
     if function_name not in function_registry:
         raise ValueError(f"Unknown function: {function_name}")
@@ -61,6 +79,11 @@ def process_function_call(function_call: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 def should_call_function(message: str) -> tuple[str | None, dict | None]:
+    """
+    ამოწმებს, უნდა თუ არა ფუნქციის გამოძახება მოცემული შეტყობინების საფუძველზე.
+    :param message: შესამოწმებელი შეტყობინება
+    :return: ფუნქციის სახელი და არგუმენტები, თუ ნაპოვნია
+    """
     function_call_pattern = r'(search_products|format_product)\((.*?)\)'
     match = re.search(function_call_pattern, message)
     if match:
@@ -76,6 +99,12 @@ def should_call_function(message: str) -> tuple[str | None, dict | None]:
     return None, None
 
 def execute_function(function_name: str, args: Dict[str, Any]) -> Any:
+    """
+    ასრულებს მითითებულ ფუნქციას მოცემული არგუმენტებით.
+    :param function_name: გამოსაძახებელი ფუნქციის სახელი
+    :param args: ფუნქციის არგუმენტები
+    :return: ფუნქციის შედეგი
+    """
     if function_name in function_registry:
         return function_registry[function_name]['function'](**args)
     else:
