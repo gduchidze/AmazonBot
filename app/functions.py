@@ -2,7 +2,6 @@ import json
 from typing import Callable, Dict, Any
 import re
 
-# ფუნქციების რეესტრი, სადაც ვინახავთ ყველა რეგისტრირებულ ფუნქციას
 function_registry: Dict[str, Dict[str, Any]] = {}
 
 def register_function(name: str, description: str, parameters: Dict[str, Any]):
